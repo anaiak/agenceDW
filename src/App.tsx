@@ -9,6 +9,7 @@ import BackgroundAnimations from './components/BackgroundAnimations.tsx';
 import Header from './components/Header.tsx';
 import Hero from './components/Hero.tsx';
 import Services from './components/Services.tsx';
+import Process from './components/Process.tsx';
 import SiteTypes from './components/SiteTypes.tsx';
 import WebDesignTrends from './components/ArtisticStyles.tsx';
 import Portfolio from './components/Portfolio.tsx';
@@ -63,6 +64,7 @@ const HomePage: React.FC<{ showIntro: boolean; pushTransition: boolean }> = ({ s
       <main>
         <Hero />
         <Services />
+        <Process />
         <SiteTypes />
         <WebDesignTrends />
         <Portfolio />

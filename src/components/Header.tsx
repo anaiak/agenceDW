@@ -178,6 +178,35 @@ const Pictogram = styled(motion.div)`
     right: 0;
   }
   
+  &.process::before {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    top: 2px;
+    left: 8px;
+  }
+  
+  &.process::after {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    bottom: 2px;
+    right: 8px;
+  }
+  
+  &.process {
+    &::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 12px;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+    }
+  }
+  
   &.about::before {
     width: 100%;
     height: 2px;
@@ -230,6 +259,7 @@ const Header: React.FC = () => {
 
   const navItems = [
     { name: 'Work', href: '#portfolio', icon: 'work' },
+    { name: 'Process', href: '#process', icon: 'process' },
     { name: 'About', href: '#about', icon: 'about' },
     { name: 'Contact', href: '#contact', icon: 'contact' }
   ];

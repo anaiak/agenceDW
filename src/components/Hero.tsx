@@ -11,6 +11,12 @@ const HeroSection = styled.section`
   position: relative;
   overflow: hidden;
   background: #000000;
+
+  @media (max-width: 768px) {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    padding: 2rem 1rem;
+  }
 `;
 
 const HeroContent = styled.div`
@@ -18,28 +24,58 @@ const HeroContent = styled.div`
   z-index: 2;
   text-align: center;
   max-width: 90vw;
+
+  @media (max-width: 768px) {
+    max-width: 95vw;
+    padding: 0 1rem;
+  }
 `;
 
 const MainTitle = styled(motion.h1)`
-  font-size: clamp(8rem, 25vw, 30rem);
+  font-size: clamp(12rem, 35vw, 45rem); /* Increased size significantly */
   font-weight: 100;
   color: #ffffff;
   font-family: 'JetBrains Mono', monospace;
-  line-height: 0.7;
+  line-height: 0.6; /* Tighter line height for vertical stacking */
   letter-spacing: -0.1em;
   text-transform: uppercase;
   margin: 0;
   position: relative;
   overflow: visible;
+  display: flex;
+  flex-direction: column; /* Stack words vertically */
+  align-items: center;
 
   @media (max-width: 768px) {
-    font-size: clamp(4rem, 20vw, 8rem);
+    font-size: clamp(3rem, 18vw, 6rem); /* Adjusted for vertical letters */
+    line-height: 0.8; /* More breathing room for vertical letters */
+    letter-spacing: 0.1em; /* Positive spacing for vertical layout */
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row; /* Horizontal layout for mobile */
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    gap: 2rem; /* Space between words */
   }
 `;
 
 const TitleLine = styled(motion.div)`
   position: relative;
   overflow: visible;
+  width: 100%; /* Full width for each line */
+  text-align: center; /* Center each word */
+
+  @media (max-width: 768px) {
+    writing-mode: vertical-lr; /* Vertical writing for mobile */
+    text-orientation: upright; /* Keep letters upright */
+    height: 50vh; /* Fixed height for vertical text */
+    width: auto;
+    margin: 0; /* Remove margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 // Animation plus simple pour les serpents
@@ -67,6 +103,10 @@ const SerpentContainer = styled.div`
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    opacity: 0.3; /* Reduce serpent visibility on mobile for better performance */
+  }
 `;
 
 // Serpent horizontal avec position fixe
@@ -86,6 +126,12 @@ const HorizontalSerpent = styled.div<{ $delay: number; $top: number }>`
     from { left: -200px; }
     to { left: 100vw; }
   }
+
+  @media (max-width: 768px) {
+    width: 150px; /* Smaller serpents on mobile */
+    height: 1px;
+    opacity: 0.4;
+  }
 `;
 
 // Serpent vertical avec position fixe
@@ -104,6 +150,12 @@ const VerticalSerpent = styled.div<{ $delay: number; $left: number }>`
   @keyframes moveVertical {
     from { top: -200px; }
     to { top: 100vh; }
+  }
+
+  @media (max-width: 768px) {
+    width: 1px;
+    height: 150px;
+    opacity: 0.4;
   }
 `;
 
@@ -128,6 +180,15 @@ const WavySerpent = styled.svg<{ $delay: number; $top: number }>`
     0% { stroke-dasharray: 0, 1000; }
     50% { stroke-dasharray: 500, 500; }
     100% { stroke-dasharray: 1000, 0; }
+  }
+
+  @media (max-width: 768px) {
+    height: 60px;
+    opacity: 0.1;
+    
+    path {
+      stroke-width: 0.5;
+    }
   }
 `;
 
@@ -163,6 +224,10 @@ const LetterSerpent = styled.div<{ $letterIndex: number }>`
     left: 0;
     animation: letterWave${props => props.$letterIndex % 8} 3s ease-in-out infinite reverse;
     animation-delay: ${props => props.$letterIndex * 0.3}s;
+  }
+
+  @media (max-width: 768px) {
+    display: none; /* Hide complex letter animations on mobile for performance */
   }
   
   @keyframes letterWave0 {
@@ -215,11 +280,18 @@ const SerpentParticle = styled(motion.div)<{ $size: number }>`
   border-radius: 50%;
   opacity: 0.8;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+
+  @media (max-width: 768px) {
+    width: ${props => props.$size * 0.7}px; /* Smaller particles on mobile */
+    height: ${props => props.$size * 0.7}px;
+    opacity: 0.6;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  }
 `;
 
 const Subtitle = styled(motion.div)`
   position: absolute;
-  bottom: 10vh;
+  bottom: 8vh; /* Moved higher due to larger title */
   left: 50%;
   transform: translateX(-50%);
   font-family: 'JetBrains Mono', monospace;
@@ -239,6 +311,21 @@ const Subtitle = styled(motion.div)`
     width: 2px;
     height: 2rem;
     background: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    bottom: 25vh; /* Lower position to accommodate vertical text */
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    padding: 0 2rem;
+    line-height: 1.4;
+    writing-mode: horizontal-tb; /* Ensure subtitle stays horizontal */
+    
+    &::before {
+      top: -0.8rem;
+      height: 1.5rem;
+      width: 1px;
+    }
   }
 `;
 
@@ -266,9 +353,38 @@ const CTAButton = styled(motion.button)`
   }
 
   @media (max-width: 768px) {
-    bottom: 15vh;
+    bottom: 8vh; /* Higher position for better thumb reach */
     right: 50%;
     transform: translateX(50%);
+    padding: 0.8rem 1.5rem;
+    font-size: 0.75rem;
+    cursor: pointer; /* Enable cursor on mobile */
+    border: 2px solid #000000;
+    
+    /* Touch feedback */
+    &:hover {
+      transform: translateX(50%); /* Override desktop hover transform */
+    }
+    
+    &:active {
+      background: #000000;
+      color: #ffffff;
+      transform: translateX(50%) scale(0.95);
+    }
+  }
+`;
+
+// 3D Element container avec optimisations mobile
+const Abstract3DContainer = styled.div`
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  opacity: 0.1;
+
+  @media (max-width: 768px) {
+    display: none; /* Hide 3D element on mobile for performance */
   }
 `;
 
@@ -289,6 +405,15 @@ const Abstract3D = () => {
     </mesh>
   );
 };
+
+// Suppression du MobileTitleContainer car on utilise directement MainTitle
+const MobileTitleContainer = styled.div`
+  display: contents; /* This makes the container transparent */
+  
+  @media (max-width: 768px) {
+    display: contents; /* Transparent container */
+  }
+`;
 
 const Hero: React.FC = () => {
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; size: number }>>([]);
@@ -317,7 +442,9 @@ const Hero: React.FC = () => {
   
   useEffect(() => {
     const generateParticles = () => {
-      const newParticles = Array.from({ length: 8 }, (_, i) => ({
+      // Reduce particles on mobile for better performance
+      const particleCount = window.innerWidth <= 768 ? 4 : 8;
+      const newParticles = Array.from({ length: particleCount }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -327,22 +454,38 @@ const Hero: React.FC = () => {
     };
     
     generateParticles();
+    
+    // Re-generate on resize
+    const handleResize = () => {
+      generateParticles();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const titleVariants = {
-    hidden: { y: 100, opacity: 0 },
+    hidden: { y: 150, opacity: 0, scale: 0.8 }, // Increased initial offset for larger text
     visible: (i: number) => ({
       y: 0,
       opacity: 1,
+      scale: 1,
       transition: {
-        delay: i * 0.3,
-        duration: 1.2,
+        delay: i * 0.3, // Slightly longer delay between words for dramatic effect
+        duration: 1, // Slightly longer duration for larger text
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     })
   };
 
   const words = ['DIGITAL', 'BRUTALISM'];
+
+  const handleCTAClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <HeroSection id="home">
@@ -395,7 +538,7 @@ const Hero: React.FC = () => {
             scale: [1, 1.2, 0.8, 1],
           }}
           transition={{
-            duration: 6 + particle.id * 0.5,
+            duration: window.innerWidth <= 768 ? 4 + particle.id * 0.3 : 6 + particle.id * 0.5, // Faster on mobile
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -404,49 +547,44 @@ const Hero: React.FC = () => {
 
       <HeroContent>
         <MainTitle>
-          {words.map((word, wordIndex) => (
-            <TitleLine key={word}>
-              <motion.div
-                custom={wordIndex}
-                initial="hidden"
-                animate="visible"
-                variants={titleVariants}
-                className="fracture"
-                style={{ position: 'relative' }}
-              >
-                {word}
-                
-                {/* Serpents simplifiés pour chaque lettre */}
-                {word.split('').map((letter, letterIndex) => (
-                  <LetterSerpent 
-                    key={`${word}-${letterIndex}`} 
-                    $letterIndex={letterIndex}
-                  />
-                ))}
-              </motion.div>
-            </TitleLine>
-          ))}
+          <MobileTitleContainer>
+            {words.map((word, wordIndex) => (
+              <TitleLine key={word}>
+                <motion.div
+                  custom={wordIndex}
+                  initial="hidden"
+                  animate="visible"
+                  variants={titleVariants}
+                  className="fracture"
+                  style={{ position: 'relative' }}
+                >
+                  {word}
+                  
+                  {/* Serpents simplifiés pour chaque lettre - Hidden on mobile due to vertical text */}
+                  {word.split('').map((letter, letterIndex) => (
+                    <LetterSerpent 
+                      key={`${word}-${letterIndex}`} 
+                      $letterIndex={letterIndex}
+                    />
+                  ))}
+                </motion.div>
+              </TitleLine>
+            ))}
+          </MobileTitleContainer>
         </MainTitle>
       </HeroContent>
 
       {/* 3D Element */}
-      <div style={{
-        position: 'absolute',
-        top: '20%',
-        right: '10%',
-        width: '200px',
-        height: '200px',
-        opacity: 0.1,
-      }}>
+      <Abstract3DContainer>
         <Canvas>
           <Abstract3D />
         </Canvas>
-      </div>
+      </Abstract3DContainer>
 
       <Subtitle
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        transition={{ delay: 1, duration: 0.8 }} // Faster subtitle appearance
         className="accent-micro"
       >
         STUDIO DE CRÉATION WEB
@@ -457,8 +595,10 @@ const Hero: React.FC = () => {
       <CTAButton
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 2, duration: 0.5 }}
+        transition={{ delay: 1.5, duration: 0.5 }} // Earlier CTA appearance
         whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }} // Touch feedback
+        onClick={handleCTAClick}
         data-cursor="hover"
       >
         COMMENCER
