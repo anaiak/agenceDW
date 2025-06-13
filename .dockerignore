@@ -6,7 +6,7 @@ yarn-error.log*
 .npm/
 .yarn/
 
-# Build et fichiers temporaires
+# Build et fichiers temporaires (mais garder le dossier src et public)
 build/
 dist/
 .cache/
@@ -15,6 +15,7 @@ dist/
 
 # Fichiers d'environnement
 .env*
+!.env.example
 
 # Fichiers de développement
 .git/
@@ -43,4 +44,9 @@ logs/
 # Docker
 Dockerfile*
 docker-compose*
-.dockerignore 
+.dockerignore
+
+# Documentation (mais garder les fichiers nécessaires au build)
+*.md
+!package*.json
+!tsconfig.json 
