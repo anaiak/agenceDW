@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouvelle Demande de Contact - DreamWeaver Studio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #000000;
+            border: 2px solid #ffffff;
+            position: relative;
+        }
+        
+        .email-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            border-left: 3px solid #ffffff;
+            border-top: 3px solid #ffffff;
+        }
+        
+        .email-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            border-right: 3px solid #ffffff;
+            border-bottom: 3px solid #ffffff;
+        }
+        
+        .header {
+            background: #ffffff;
+            color: #000000;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid #ffffff;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .subtitle {
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .alert-badge {
+            background: #ffffff;
+            color: #000000;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            border: 2px solid #ffffff;
+        }
+        
+        .info-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-item {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .info-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            word-break: break-word;
+        }
+        
+        .message-section {
+            border: 2px solid #ffffff;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .message-section::before {
+            content: 'MESSAGE';
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            background: #000000;
+            color: #ffffff;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            border: 1px solid #ffffff;
+        }
+        
+        .message-content {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #ffffff;
+            font-weight: 400;
+            white-space: pre-wrap;
+        }
+        
+        .metadata {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .metadata-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .metadata-value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 2px solid #ffffff;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .footer {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .priority-high {
+            background: #ff0000 !important;
+            color: #ffffff !important;
+        }
+        
+        .company-highlight {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #ffffff;
+            padding-left: 1rem;
+        }
+        
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 0;
+                border-left: none;
+                border-right: none;
+            }
+            
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🚨 NOUVELLE DEMANDE</h1>
+            <div class="subtitle">DreamWeaver Studio - Contact Form</div>
+        </div>
+        
+        <div class="content">
+            <div class="alert-badge">
+                ⚡ LEAD ENTRANT
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nom du prospect</span>
+                    <div class="info-value">{{from_name}}</div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Email de contact</span>
+                    <div class="info-value">{{from_email}}</div>
+                </div>
+                
+                <div class="info-item {{company}}">
+                    <span class="info-label">Entreprise</span>
+                    <div class="info-value">{{company}}</div>
+                </div>
+            </div>
+            
+            <div class="message-section">
+                <div class="message-content">{{message}}</div>
+            </div>
+            
+            <div class="metadata">
+                <div class="metadata-item">
+                    <span class="metadata-label">Source</span>
+                    <span class="metadata-value">Site Web - Formulaire Contact</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Date de réception</span>
+                    <span class="metadata-value">{{date}}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Heure</span>
+                    <span class="metadata-value">{{time}}</span>
+                </div>
+                <div class="metadata-item">
+                    <span class="metadata-label">Priorité</span>
+                    <span class="metadata-value">🔥 HAUTE</span>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="mailto:{{from_email}}?subject=Re: Votre demande sur DreamWeaver Studio&body=Bonjour {{from_name}},%0D%0A%0D%0AMerci pour votre message concernant votre projet.%0D%0A%0D%0ACordialement,%0D%0AÉquipe DreamWeaver Studio" class="btn">
+                    📧 RÉPONDRE
+                </a>
+                <a href="tel:{{phone}}" class="btn">
+                    📞 APPELER
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>DreamWeaver Studio - Création Web Avant-Garde</p>
+            <p>🌐 dreamweaver.studio | 📱 +33 1 23 45 67 89</p>
+        </div>
+    </div>
+</body>
+</html> 
