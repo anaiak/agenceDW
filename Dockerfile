@@ -50,17 +50,21 @@ RUN npm run build
 # Stage 2: Production
 FROM nginx:alpine AS production
 
-# Copier la configuration nginx personnalisée
-COPY nginx.conf /etc/nginx/nginx.conf
+# Installer envsubst pour les variables d'environnement
+RUN apk add --no-cache gettext
+
+# Copier le template de configuration nginx
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
 
 # Copier les fichiers buildés depuis le stage builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Exposer le port
-EXPOSE 80
+# Script de démarrage qui remplace les variables d'environnement
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-# Sanity check
-RUN ls -la /usr/share/nginx/html/
+# Exposer le port (sera défini par Railway)
+EXPOSE $PORT
 
-# Démarrer nginx
-CMD ["nginx", "-g", "daemon off;"] 
+# Démarrer avec le script personnalisé
+CMD ["/start.sh"] 
