@@ -1,52 +1,22 @@
-# Dépendances et cache
+# Exclusions essentielles uniquement
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.npm/
-.yarn/
-
-# Build et fichiers temporaires (mais garder le dossier src et public)
-build/
-dist/
-.cache/
-.tmp/
-.temp/
-
-# Fichiers d'environnement
-.env*
-!.env.example
-
-# Fichiers de développement
 .git/
-.gitignore
-README.md
-*.md
-
-# Fichiers IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Fichiers OS
-.DS_Store
-Thumbs.db
-
-# Tests et couverture
-coverage/
-.nyc_output/
+build/
+.cache/
 
 # Logs
 *.log
-logs/
+npm-debug.log*
+yarn-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Docker
 Dockerfile*
-docker-compose*
-.dockerignore
-
-# Documentation (mais garder les fichiers nécessaires au build)
-*.md
-!package*.json
-!tsconfig.json 
+.dockerignore 
