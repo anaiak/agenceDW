@@ -580,8 +580,8 @@ const Particle = styled(motion.div)<{ $size: number }>`
     transform: translate(-50%, -50%);
     width: 2px;
     height: 2px;
-  background: #ffffff;
-  border-radius: 50%;
+    background: #ffffff;
+    border-radius: 50%;
     animation: sparkle 4s ease-in-out infinite, particleHeartbeat 4s ease-in-out infinite;
   }
   
@@ -1023,27 +1023,27 @@ const Hero: React.FC = () => {
       <CornerPulse $corner="bottom-right" />
       
       <ParticleContainer>
-      {particles.map((particle) => (
+        {particles.map((particle) => (
           <Particle
-          key={particle.id}
-          $size={particle.size}
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-          }}
-          animate={{
+            key={particle.id}
+            $size={particle.size}
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+            }}
+            animate={{
               y: [0, -20, 0],
               opacity: [0.1, 0.4, 0.1],
               scale: [1, 1.2, 1],
-          }}
-          transition={{
+            }}
+            transition={{
               duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
+              repeat: Infinity,
+              ease: "easeInOut",
               delay: (particle.id % 4) * 1,
-          }}
-        />
-      ))}
+            }}
+          />
+        ))}
       </ParticleContainer>
 
       <HeroContent>

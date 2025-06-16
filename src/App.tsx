@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlobalStyles } from './styles/GlobalStyles.ts';
@@ -17,6 +17,9 @@ import Contact from './components/Contact.tsx';
 import Footer from './components/Footer.tsx';
 import ProjectDetail from './components/ProjectDetail.tsx';
 import ContactFloatingButton from './components/ContactFloatingButton.tsx';
+import LegalNotice from './components/LegalNotice.tsx';
+import PrivacyPolicy from './components/PrivacyPolicy.tsx';
+import TermsOfService from './components/TermsOfService.tsx';
 
 // Container pour la transition push
 const PushContainer = styled.div`
@@ -99,36 +102,45 @@ const HomePage: React.FC<{ showIntro: boolean; pushTransition: boolean }> = ({ s
   </PushContainer>
 );
 
-const App: React.FC = () => {
+// Composant principal de l'application
+const AppContent: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [pushTransition, setPushTransition] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPushTransition(true);
-      // Délai pour que la transition push se termine avant de masquer l'intro
-      setTimeout(() => {
-        setShowIntro(false);
-        // Permettre le scroll après la transition et forcer le scroll en haut
+    // Ne déclencher l'intro que sur la page d'accueil
+    if (location.pathname === '/') {
+      const timer = setTimeout(() => {
+        setPushTransition(true);
+        // Délai pour que la transition push se termine avant de masquer l'intro
+        setTimeout(() => {
+          setShowIntro(false);
+          // Permettre le scroll après la transition et forcer le scroll en haut
+          document.body.style.overflow = 'auto';
+          window.scrollTo(0, 0); // Forcer le scroll en haut de la page
+        }, 2000); // Ajusté pour correspondre à la nouvelle durée de transition
+      }, 3500); // Intro de 3.5 secondes exactement
+
+      // Bloquer le scroll pendant l'intro
+      document.body.style.overflow = 'hidden';
+      
+      // S'assurer qu'on est en haut de la page au début
+      window.scrollTo(0, 0);
+
+      return () => {
+        clearTimeout(timer);
         document.body.style.overflow = 'auto';
-        window.scrollTo(0, 0); // Forcer le scroll en haut de la page
-      }, 2000); // Ajusté pour correspondre à la nouvelle durée de transition
-    }, 3500); // Intro de 3.5 secondes exactement
-
-    // Bloquer le scroll pendant l'intro
-    document.body.style.overflow = 'hidden';
-    
-    // S'assurer qu'on est en haut de la page au début
-    window.scrollTo(0, 0);
-
-    return () => {
-      clearTimeout(timer);
+      };
+    } else {
+      // Sur les autres pages, s'assurer que le scroll est autorisé immédiatement
       document.body.style.overflow = 'auto';
-    };
-  }, []);
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   return (
-    <Router>
+    <>
       <GlobalStyles />
       <BackgroundAnimations />
       
@@ -141,8 +153,28 @@ const App: React.FC = () => {
           path="/project/:slug" 
           element={<ProjectDetail />} 
         />
+        <Route 
+          path="/legal-notice" 
+          element={<LegalNotice />} 
+        />
+        <Route 
+          path="/privacy-policy" 
+          element={<PrivacyPolicy />} 
+        />
+        <Route 
+          path="/terms-of-service" 
+          element={<TermsOfService />} 
+        />
       </Routes>
       <ContactFloatingButton />
+    </>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 };

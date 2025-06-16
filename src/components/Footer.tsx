@@ -418,9 +418,9 @@ const Footer: React.FC = () => {
         </Copyright>
         
         <LegalLinks>
-          <LegalLink href="#" data-cursor="hover">MENTIONS LÉGALES</LegalLink>
-          <LegalLink href="#" data-cursor="hover">CONFIDENTIALITÉ</LegalLink>
-          <LegalLink href="#" data-cursor="hover">CGV</LegalLink>
+          <LegalLink href="/legal-notice" data-cursor="hover">MENTIONS LÉGALES</LegalLink>
+          <LegalLink href="/privacy-policy" data-cursor="hover">CONFIDENTIALITÉ</LegalLink>
+          <LegalLink href="/terms-of-service" data-cursor="hover">CGV</LegalLink>
         </LegalLinks>
       </FooterBottom>
     </FooterSection>

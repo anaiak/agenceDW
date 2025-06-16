@@ -34,7 +34,7 @@ const SectionTitle = styled(motion.h2)`
   }
 
   @media (max-width: 768px) {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(3.5rem, 10vw, 7rem);
     margin-bottom: 6vh;
   }
 `;
@@ -219,6 +219,10 @@ const ServiceDescription = styled.p`
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const ServiceTech = styled.div`
@@ -236,34 +240,10 @@ const TechTag = styled.span`
   padding: 0.3rem 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-`;
-
-// ROI/Résultat visible
-const ServiceResult = styled.div`
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  
-  .metric {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #ffffff;
-    display: block;
-  }
 
   @media (max-width: 768px) {
-    font-size: 0.55rem;
-    bottom: 0.8rem;
-    left: 0.8rem;
-    
-    .metric {
-      font-size: 0.7rem;
-    }
+    font-size: 0.75rem;
+    padding: 0.4rem 0.7rem;
   }
 `;
 
@@ -337,7 +317,7 @@ const TestimonialText = styled.p`
   letter-spacing: -0.02em;
 
   @media (max-width: 768px) {
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
   }
 `;
 
@@ -361,10 +341,10 @@ const TestimonialAuthor = styled.div`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     
     .result {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
     }
   }
 `;
@@ -471,7 +451,7 @@ const LogoText = styled.div`
   }
 
   @media (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 `;
 
@@ -563,48 +543,42 @@ const Services: React.FC = () => {
       title: "DESIGN RADICAL",
       description: "Brutalisme numérique. Minimalisme extrême. Contrastes saisissants. Nous cassons les codes pour créer l'inattendu.",
       tech: ["FIGMA", "SKETCH", "PHOTOSHOP", "BRUTALISM"],
-      position: "left",
-      result: "+240% engagement"
+      position: "left"
     },
     {
       number: "02", 
       title: "DÉVELOPPEMENT AVANT-GARDE",
       description: "Code propre, architecture modulaire, performances ultimes. Chaque ligne de code est pensée pour l'excellence technique.",
       tech: ["REACT", "NEXT.JS", "TYPESCRIPT", "THREE.JS"],
-      position: "center",
-      result: "Score 98/100 lighthouse"
+      position: "center"
     },
     {
       number: "03",
       title: "EXPÉRIENCE SENSORIELLE",
       description: "Interactions surprenantes, animations cinématographiques, parcours utilisateur révolutionnaire.",
       tech: ["FRAMER", "GSAP", "WEBGL", "CSS3"],
-      position: "right",
-      result: "+180% conversions"
+      position: "right"
     },
     {
       number: "04",
       title: "STRATÉGIE DISRUPTIVE",
       description: "Nous ne suivons pas les tendances, nous les créons. Chaque projet redéfinit les standards de son secteur.",
       tech: ["BRANDING", "UX/UI", "STRATEGY", "INNOVATION"],
-      position: "left",
-      result: "Clients conquis à 100%"
+      position: "left"
     },
     {
       number: "05",
       title: "PERFORMANCE EXTRÊME",
       description: "Vitesse de chargement record, SEO technique poussé, optimisation obsessionnelle pour l'excellence.",
       tech: ["LIGHTHOUSE", "CORE VITALS", "SEO", "PWA"],
-      position: "center",
-      result: "-60% temps chargement"
+      position: "center"
     },
     {
       number: "06",
       title: "SUPPORT TECHNIQUE",
       description: "Maintenance proactive, mises à jour continues, support technique d'élite pour votre tranquillité d'esprit.",
       tech: ["24/7", "MONITORING", "BACKUP", "SECURITY"],
-      position: "right",
-      result: "99.9% uptime garanti"
+      position: "right"
     }
   ];
 
@@ -676,11 +650,6 @@ const Services: React.FC = () => {
                   </TechTag>
                 ))}
               </ServiceTech>
-              
-              <ServiceResult>
-                <span className="metric">{service.result}</span>
-                Résultat moyen client
-              </ServiceResult>
               
               {/* Effets de scan cinématique */}
               <ScanContainer>
@@ -971,6 +940,7 @@ const PricingTitle = styled(motion.h2)`
 
   @media (max-width: 768px) {
     margin-bottom: 6rem;
+    font-size: clamp(3.5rem, 10vw, 7rem);
     
     &::after {
       width: 80px;
@@ -1071,7 +1041,7 @@ const PricingName = styled.h3`
   margin-bottom: 1rem;
 
   @media (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 `;
 
@@ -1083,7 +1053,7 @@ const PricingSubtitle = styled.p`
   letter-spacing: 0.1em;
 
   @media (max-width: 768px) {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
   }
 `;
 
@@ -1107,7 +1077,7 @@ const PricingAmount = styled.div`
   margin-bottom: 0.5rem;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 `;
 
@@ -1119,7 +1089,7 @@ const PricingPeriod = styled.div`
   letter-spacing: 0.1em;
 
   @media (max-width: 768px) {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
   }
 `;
 
@@ -1142,7 +1112,7 @@ const PricingFeature = styled.li`
   line-height: 1.4;
 
   @media (max-width: 768px) {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     margin-bottom: 0.8rem;
   }
 `;
@@ -1184,8 +1154,8 @@ const PricingCTA = styled(motion.button)<{ $featured?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.8rem;
-    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    padding: 1rem 1.5rem;
   }
 `;
 
@@ -1199,7 +1169,7 @@ const PricingNote = styled.p`
   line-height: 1.4;
 
   @media (max-width: 768px) {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 `;
 
@@ -1227,7 +1197,7 @@ const PricingFooterText = styled.p`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
   }
 `;
 
