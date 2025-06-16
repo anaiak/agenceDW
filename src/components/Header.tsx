@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { gtmEvents } from '../utils/gtm.ts';
 
 const HeaderContainer = styled(motion.header)`
   position: fixed;
@@ -294,7 +295,10 @@ const Header: React.FC = () => {
               <NavLink
                 key={item.name}
                 href={item.href}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  gtmEvents.menuClick(item.name);
+                }}
                 whileHover={{ x: -5 }}
                 style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
               >

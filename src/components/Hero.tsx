@@ -175,9 +175,9 @@ const ECGLine = styled(motion.div)`
   height: 120px;
   margin: 6rem auto;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
   @media (max-width: 1024px) {
     margin: 5rem auto;
@@ -580,8 +580,8 @@ const Particle = styled(motion.div)<{ $size: number }>`
     transform: translate(-50%, -50%);
     width: 2px;
     height: 2px;
-    background: #ffffff;
-    border-radius: 50%;
+  background: #ffffff;
+  border-radius: 50%;
     animation: sparkle 4s ease-in-out infinite, particleHeartbeat 4s ease-in-out infinite;
   }
   
@@ -630,132 +630,6 @@ const Particle = styled(motion.div)<{ $size: number }>`
         box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
       }
     }
-  }
-`;
-
-// Indicateur d'urgence/rareté - style brutal
-const UrgencyBanner = styled(motion.div)`
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.8rem 1.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  backdrop-filter: blur(10px);
-  z-index: 10;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: #ffffff;
-    animation: urgencyPulse 2s ease-in-out infinite;
-  }
-  
-  @keyframes urgencyPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
-  }
-
-  @media (max-width: 1024px) {
-    top: 1.5rem;
-    right: 1.5rem;
-    padding: 0.7rem 1.2rem;
-    font-size: 0.65rem;
-  }
-
-  @media (max-width: 768px) {
-    top: 1rem;
-    right: 1rem;
-    padding: 0.6rem 1rem;
-    font-size: 0.6rem;
-  }
-
-  @media (max-width: 480px) {
-    /* Repositionner en bas à droite pour éviter les conflits */
-    top: auto;
-    bottom: 8rem;
-    right: 1rem;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.05em;
-    
-    &::before {
-      width: 2px;
-    }
-  }
-
-  @media (max-width: 360px) {
-    /* Masquer sur très petits écrans pour éviter l'encombrement */
-    display: none;
-  }
-`;
-
-// Badge de social proof - minimaliste
-const SocialProofBadge = styled(motion.div)`
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  z-index: 10;
-  
-  .number {
-    font-size: 1.2rem;
-  font-weight: 700;
-    color: #ffffff;
-    display: block;
-    margin-bottom: 0.2rem;
-  }
-
-  @media (max-width: 1024px) {
-    top: 1.5rem;
-    left: 1.5rem;
-    font-size: 0.65rem;
-    
-    .number {
-      font-size: 1.1rem;
-    }
-  }
-
-  @media (max-width: 768px) {
-    top: 1rem;
-    left: 1rem;
-    font-size: 0.6rem;
-    
-    .number {
-      font-size: 1rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    /* Repositionner en bas à gauche pour éviter les conflits */
-    top: auto;
-    bottom: 8rem;
-    left: 1rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    
-    .number {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 360px) {
-    /* Masquer sur très petits écrans pour éviter l'encombrement */
-    display: none;
   }
 `;
 
@@ -851,7 +725,7 @@ const CTAButton = styled(motion.button)`
     max-width: 90%;
     
     .cta-main {
-    font-size: 0.75rem;
+      font-size: 0.75rem;
       margin-bottom: 0.1rem;
     }
     
@@ -996,24 +870,6 @@ const Hero: React.FC = () => {
       <BackgroundGrid />
       <ScreenBreathing />
       
-      {/* Éléments de conversion psychologique */}
-      <UrgencyBanner
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 2.5 }}
-      >
-        Places limitées — 3 projets par mois
-      </UrgencyBanner>
-      
-      <SocialProofBadge
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 2.0 }}
-      >
-        <span className="number">47+</span>
-        Entreprises conquises
-      </SocialProofBadge>
-      
       {/* Éléments de battement subtils */}
       <HeartbeatGlow />
       <PulseWave />
@@ -1023,27 +879,27 @@ const Hero: React.FC = () => {
       <CornerPulse $corner="bottom-right" />
       
       <ParticleContainer>
-        {particles.map((particle) => (
+      {particles.map((particle) => (
           <Particle
-            key={particle.id}
-            $size={particle.size}
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-            }}
-            animate={{
+          key={particle.id}
+          $size={particle.size}
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+          }}
+          animate={{
               y: [0, -20, 0],
               opacity: [0.1, 0.4, 0.1],
               scale: [1, 1.2, 1],
-            }}
-            transition={{
+          }}
+          transition={{
               duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
+            repeat: Infinity,
+            ease: "easeInOut",
               delay: (particle.id % 4) * 1,
-            }}
-          />
-        ))}
+          }}
+        />
+      ))}
       </ParticleContainer>
 
       <HeroContent>
@@ -1117,7 +973,7 @@ const Hero: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 2.2 }}
       >
-        Scroll
+        
       </ScrollIndicator>
     </HeroSection>
   );

@@ -231,7 +231,7 @@ const TeamMember = styled(motion.div)`
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 2rem;
-
+  
   @media (max-width: 768px) {
     padding: 1.5rem;
   }
@@ -431,47 +431,47 @@ const About: React.FC = () => {
 
   return (
     <>
-      <AboutSection id="about" ref={ref}>
-        <SectionTitle
-          initial={{ opacity: 0, x: -100 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          MANIFESTO
-        </SectionTitle>
+    <AboutSection id="about" ref={ref}>
+      <SectionTitle
+        initial={{ opacity: 0, x: -100 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        MANIFESTO
+      </SectionTitle>
 
-        <ContentGrid>
-          <ManifestoSection>
-            <ManifestoText
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2, duration: 1 }}
-            >
-              <strong>Nous ne suivons pas les tendances.</strong> 
-              Nous les créons. Dans un monde saturé de similitudes, 
-              nous revendiquons la différence radicale. Chaque pixel, 
-              chaque interaction, chaque animation est pensée pour 
-              <strong> choquer, surprendre, émouvoir</strong>.
-            </ManifestoText>
+      <ContentGrid>
+        <ManifestoSection>
+          <ManifestoText
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 1 }}
+          >
+            <strong>Nous ne suivons pas les tendances.</strong> 
+            Nous les créons. Dans un monde saturé de similitudes, 
+            nous revendiquons la différence radicale. Chaque pixel, 
+            chaque interaction, chaque animation est pensée pour 
+            <strong> choquer, surprendre, émouvoir</strong>.
+          </ManifestoText>
 
-            <PhilosophyCard
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.4, duration: 1 }}
-            >
-              <PhilosophyTitle>DESIGN PHILOSOPHY</PhilosophyTitle>
-              <PhilosophyText>
-                Le minimalisme comme arme de destruction massive contre 
-                la médiocrité. Nous supprimons tout ce qui n'est pas 
-                essentiel pour révéler la beauté brute de l'idée pure.
-              </PhilosophyText>
-            </PhilosophyCard>
+          <PhilosophyCard
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.4, duration: 1 }}
+          >
+            <PhilosophyTitle>DESIGN PHILOSOPHY</PhilosophyTitle>
+            <PhilosophyText>
+              Le minimalisme comme arme de destruction massive contre 
+              la médiocrité. Nous supprimons tout ce qui n'est pas 
+              essentiel pour révéler la beauté brute de l'idée pure.
+            </PhilosophyText>
+          </PhilosophyCard>
 
             <StatsGrid
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.6, duration: 1 }}
-            >
+            transition={{ delay: 0.6, duration: 1 }}
+          >
               <StatItem>
                 <StatNumber>9/10</StatNumber>
                 <StatLabel>CLIENTS SATISFAITS</StatLabel>
@@ -485,7 +485,7 @@ const About: React.FC = () => {
                 <StatLabel>SCORE LIGHTHOUSE</StatLabel>
               </StatItem>
             </StatsGrid>
-          </ManifestoSection>
+        </ManifestoSection>
 
           <TeamSection>
             <TeamTitle
@@ -548,18 +548,18 @@ const About: React.FC = () => {
                 </MemberDescription>
               </TeamMember>
 
-              <TeamMember
+          <TeamMember
                 initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 1.6, duration: 0.8 }}
-              >
+          >
                 <MemberRole>MOTION DESIGNER</MemberRole>
                 <MemberName>MAYA DUBOIS</MemberName>
                 <MemberDescription>
                   Animation et storytelling visuel.
                 </MemberDescription>
-              </TeamMember>
-            </TeamGrid>
+          </TeamMember>
+      </TeamGrid>
 
             <ExpertiseList
               initial={{ opacity: 0 }}
@@ -573,7 +573,7 @@ const About: React.FC = () => {
             </ExpertiseList>
           </TeamSection>
         </ContentGrid>
-      </AboutSection>
+    </AboutSection>
 
       {/* Section FAQ pour les objections */}
       <FAQSection>

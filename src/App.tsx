@@ -20,6 +20,7 @@ import ContactFloatingButton from './components/ContactFloatingButton.tsx';
 import LegalNotice from './components/LegalNotice.tsx';
 import PrivacyPolicy from './components/PrivacyPolicy.tsx';
 import TermsOfService from './components/TermsOfService.tsx';
+import { initGTM, gtmEvents } from './utils/gtm.ts';
 
 // Container pour la transition push
 const PushContainer = styled.div`
@@ -108,7 +109,40 @@ const AppContent: React.FC = () => {
   const [pushTransition, setPushTransition] = useState(false);
   const location = useLocation();
 
+  // Initialize GTM on app start
   useEffect(() => {
+    initGTM();
+  }, []);
+
+  // Track page changes
+  useEffect(() => {
+    // Track page views for GTM
+    const getPageName = (pathname: string) => {
+      switch (pathname) {
+        case '/': return 'Accueil';
+        case '/legal-notice': return 'Mentions Légales';
+        case '/privacy-policy': return 'Politique de Confidentialité';
+        case '/terms-of-service': return 'Conditions Générales de Vente';
+        default:
+          if (pathname.startsWith('/project/')) {
+            return 'Détail Projet';
+          }
+          return 'Page Inconnue';
+      }
+    };
+
+    // Send page view to GTM
+    gtmEvents.pageView(getPageName(location.pathname));
+
+    // Track legal pages specifically
+    if (location.pathname === '/legal-notice') {
+      gtmEvents.legalPageView('legal-notice');
+    } else if (location.pathname === '/privacy-policy') {
+      gtmEvents.legalPageView('privacy-policy');
+    } else if (location.pathname === '/terms-of-service') {
+      gtmEvents.legalPageView('terms-of-service');
+    }
+
     // Ne déclencher l'intro que sur la page d'accueil
     if (location.pathname === '/') {
       const timer = setTimeout(() => {

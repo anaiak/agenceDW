@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { gtmEvents } from '../utils/gtm.ts';
 
 // Configuration EmailJS
 const EMAIL_SERVICE_ID = 'service_phh8eqg';
@@ -399,6 +400,9 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
     setResponseMessage(null);
     
+    // Track form submission start
+    gtmEvents.contactFormStart();
+    
     try {
       // Initialiser EmailJS avec la clé publique
       emailjs.init(EMAIL_PUBLIC_KEY);
@@ -437,6 +441,15 @@ const Contact: React.FC = () => {
 
       console.log('Email envoyé avec succès:', result);
       
+      // Track successful form submission
+      gtmEvents.contactFormSubmit({
+        form_success: true,
+        budget_range: formData.budget,
+        site_type: formData.siteType,
+        has_company: !!formData.company,
+        has_phone: !!formData.phone,
+      });
+      
       setResponseMessage({
         text: 'MESSAGE ENVOYÉ AVEC SUCCÈS - Nous vous recontacterons sous 24h',
         type: 'success'
@@ -447,6 +460,12 @@ const Contact: React.FC = () => {
       
     } catch (error) {
       console.error('Erreur lors de l\'envoi:', error);
+      
+      // Track failed form submission
+      gtmEvents.contactFormSubmit({
+        form_success: false,
+        error_type: 'email_service_error',
+      });
       
       setResponseMessage({
         text: 'ERREUR D\'ENVOI - Veuillez réessayer ou nous contacter directement',
