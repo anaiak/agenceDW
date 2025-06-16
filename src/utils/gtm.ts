@@ -1,13 +1,29 @@
 // Google Tag Manager utility functions
+
+// Configuration GTM
+const GTM_ID = 'GTM-KV8Q2ZXG';
+
 declare global {
   interface Window {
     dataLayer: any[];
+    gtag?: (...args: any[]) => void;
+    google_tag_manager?: any;
   }
 }
 
 // Initialize GTM dataLayer if it doesn't exist
 export const initGTM = () => {
   window.dataLayer = window.dataLayer || [];
+  
+  // Push GTM config
+  window.dataLayer.push({
+    'gtm.start': new Date().getTime(),
+    event: 'gtm.js'
+  });
+  
+  // Debug log pour vérifier l'initialisation
+  console.log('GTM initialized with ID:', GTM_ID);
+  console.log('dataLayer:', window.dataLayer);
 };
 
 // Push events to GTM dataLayer
@@ -87,4 +103,45 @@ export const gtmEvents = {
       page_type: pageType,
     });
   },
+};
+
+// Fonction de diagnostic GTM
+export const diagnosticGTM = () => {
+  const checks = {
+    dataLayerExists: !!window.dataLayer,
+    dataLayerIsArray: Array.isArray(window.dataLayer),
+    gtmScriptLoaded: !!document.querySelector('script[src*="googletagmanager.com/gtm.js"]'),
+    gtmContainerDetected: !!window.google_tag_manager,
+    dataLayerHasData: window.dataLayer && window.dataLayer.length > 0
+  };
+  
+  console.group('🔍 GTM Diagnostic');
+  console.log('GTM ID:', GTM_ID);
+  console.log('Checks:', checks);
+  console.log('DataLayer content:', window.dataLayer);
+  
+  if (window.google_tag_manager) {
+    console.log('GTM Container:', Object.keys(window.google_tag_manager));
+  }
+  
+  console.groupEnd();
+  
+  return checks;
+};
+
+// Fonction pour forcer le rechargement GTM si nécessaire
+export const reloadGTM = () => {
+  // Supprimer l'ancien script
+  const oldScript = document.querySelector('script[src*="googletagmanager.com/gtm.js"]');
+  if (oldScript) {
+    oldScript.remove();
+  }
+  
+  // Recharger GTM
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
+  document.head.appendChild(script);
+  
+  console.log('🔄 GTM script reloaded');
 }; 

@@ -20,7 +20,7 @@ import ContactFloatingButton from './components/ContactFloatingButton.tsx';
 import LegalNotice from './components/LegalNotice.tsx';
 import PrivacyPolicy from './components/PrivacyPolicy.tsx';
 import TermsOfService from './components/TermsOfService.tsx';
-import { initGTM, gtmEvents } from './utils/gtm.ts';
+import { initGTM, gtmEvents, diagnosticGTM } from './utils/gtm.ts';
 
 // Container pour la transition push
 const PushContainer = styled.div`
@@ -112,6 +112,11 @@ const AppContent: React.FC = () => {
   // Initialize GTM on app start
   useEffect(() => {
     initGTM();
+    
+    // Diagnostic GTM après un délai pour laisser le temps au script de charger
+    setTimeout(() => {
+      diagnosticGTM();
+    }, 2000);
   }, []);
 
   // Track page changes
