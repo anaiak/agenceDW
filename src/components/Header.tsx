@@ -36,7 +36,7 @@ const Logo = styled(motion.div)`
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  cursor: none;
+  cursor: pointer;
   
   &:hover {
     text-shadow: 2px 2px 0 #ffffff;
@@ -283,7 +283,6 @@ const Header: React.FC = () => {
             $isOpen={isMenuOpen}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileHover={{ scale: 1.1 }}
-            data-cursor="hover"
           >
             <span></span>
             <span></span>
@@ -298,7 +297,6 @@ const Header: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
                 whileHover={{ x: -5 }}
                 style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
-                data-cursor="hover"
               >
                 <Pictogram className={item.icon} />
                 {item.name}

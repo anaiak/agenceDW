@@ -238,129 +238,136 @@ const TechTag = styled.span`
   letter-spacing: 0.1em;
 `;
 
-const ManifestoCard = styled(motion.div)`
-  grid-column: 1 / 4;
-  border: 2px solid #ffffff;
-  padding: 4rem;
-  text-align: center;
-  margin-top: 5rem;
-
-  @media (max-width: 768px) {
-    grid-column: 1;
-    padding: 2rem;
-  }
-`;
-
-const ManifestoText = styled.p`
+// ROI/Résultat visible
+const ServiceResult = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.2rem;
-  font-weight: 300;
-  color: #ffffff;
-  line-height: 1.8;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   
-  strong {
+  .metric {
+    font-size: 0.8rem;
     font-weight: 700;
     color: #ffffff;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.55rem;
+    bottom: 0.8rem;
+    left: 0.8rem;
+    
+    .metric {
+      font-size: 0.7rem;
+    }
   }
 `;
 
-// Composant pour animer chaque lettre individuellement
-const AnimatedLetter = styled(motion.span)<{ $delay: number }>`
-  display: inline-block;
+// Témoignage brutal intégré
+const TestimonialSection = styled.section`
+  background: #000000;
+  padding: 8rem 5vw;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 6rem 4vw;
+  }
+`;
+
+const TestimonialCard = styled(motion.div)`
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 4rem;
+  position: relative;
+  
+  &::before, &::after {
+    content: '"';
+    position: absolute;
+    font-size: 8rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(255, 255, 255, 0.1);
+    font-weight: 100;
+  }
+  
+  &::before {
+    top: 1rem;
+    left: 2rem;
+  }
+  
+  &::after {
+    bottom: 1rem;
+    right: 2rem;
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 768px) {
+    padding: 3rem 2rem;
+    
+    &::before, &::after {
+      font-size: 4rem;
+    }
+    
+    &::before {
+      top: 0.5rem;
+      left: 1rem;
+    }
+    
+    &::after {
+      bottom: 0.5rem;
+      right: 1rem;
+    }
+  }
+`;
+
+const TestimonialText = styled.p`
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 300;
   color: #ffffff;
+  line-height: 1.4;
+  margin-bottom: 2rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+  }
 `;
 
-const AnimatedLine = styled(motion.div)`
-  margin-bottom: 0.5rem;
+const TestimonialAuthor = styled.div`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  
+  .name {
+    font-weight: 700;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  
+  .result {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    
+    .result {
+      font-size: 0.65rem;
+    }
+  }
 `;
-
-// Composant pour animer le texte lettre par lettre
-const AnimatedText: React.FC<{ 
-  text: string; 
-  isVisible: boolean; 
-  lineDelay?: number;
-  isBold?: boolean;
-}> = ({ text, isVisible, lineDelay = 0, isBold = false }) => {
-  const [animatedLetters, setAnimatedLetters] = useState<Array<{
-    char: string;
-    id: number;
-    initialX: number;
-    initialY: number;
-    initialRotate: number;
-    delay: number;
-  }>>([]);
-
-  useEffect(() => {
-    const letters = text.split('').map((char, index) => ({
-      char,
-      id: Math.random(),
-      // Directions aléatoires très variées
-      initialX: (Math.random() - 0.5) * 2000, // -1000px à 1000px
-      initialY: (Math.random() - 0.5) * 1500, // -750px à 750px
-      initialRotate: (Math.random() - 0.5) * 720, // -360° à 360°
-      delay: index * 0.03 + lineDelay // Délai progressif
-    }));
-    setAnimatedLetters(letters);
-  }, [text, lineDelay]);
-
-  return (
-    <AnimatedLine>
-      {animatedLetters.map((letter, index) => (
-        <AnimatedLetter
-          key={letter.id}
-          $delay={letter.delay}
-          initial={{
-            x: letter.initialX,
-            y: letter.initialY,
-            rotate: letter.initialRotate,
-            opacity: 0,
-            scale: Math.random() * 0.5 + 0.5 // Scale aléatoire
-          }}
-          animate={isVisible ? {
-            x: 0,
-            y: 0,
-            rotate: 0,
-            opacity: 1,
-            scale: 1
-          } : {
-            x: letter.initialX,
-            y: letter.initialY,
-            rotate: letter.initialRotate,
-            opacity: 0,
-            scale: Math.random() * 0.5 + 0.5
-          }}
-          transition={{
-            duration: 0.8 + Math.random() * 0.4, // Durée variable
-            delay: letter.delay,
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "spring",
-            damping: 20,
-            stiffness: 100
-          }}
-          style={{
-            fontWeight: isBold ? 700 : 300,
-            marginRight: letter.char === ' ' ? '0.3em' : '0'
-          }}
-        >
-          {letter.char === ' ' ? '\u00A0' : letter.char}
-        </AnimatedLetter>
-      ))}
-    </AnimatedLine>
-  );
-};
-
-// Interface pour les effets de scan
-interface ScanEffect {
-  id: number;
-  cardIndex: number;
-}
 
 // === SECTION CLIENTS ===
 
@@ -525,29 +532,18 @@ const LogoBranded = styled.div<{ $brand: string }>`
   }}
 `;
 
+// Interface pour les effets de scan
+interface ScanEffect {
+  id: number;
+  cardIndex: number;
+}
+
 const Services: React.FC = () => {
   const ref = useRef(null);
-  const manifestoRef = useRef(null);
   const clientsRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const isManifestoInView = useInView(manifestoRef, { once: true, margin: "-200px" });
   const isClientsInView = useInView(clientsRef, { once: true, margin: "-150px" });
   const [activeScan, setActiveScan] = useState<ScanEffect | null>(null);
-
-  // Fonction pour déclencher l'effet de scan
-  const triggerScan = (cardIndex: number) => {
-    const scanEffect: ScanEffect = {
-      id: Date.now(),
-      cardIndex
-    };
-    
-    setActiveScan(scanEffect);
-    
-    // Nettoyer après l'animation (2 secondes)
-    setTimeout(() => {
-      setActiveScan(null);
-    }, 2000);
-  };
 
   // Données clients françaises (pour les logos uniquement)
   const clients = [
@@ -567,42 +563,48 @@ const Services: React.FC = () => {
       title: "DESIGN RADICAL",
       description: "Brutalisme numérique. Minimalisme extrême. Contrastes saisissants. Nous cassons les codes pour créer l'inattendu.",
       tech: ["FIGMA", "SKETCH", "PHOTOSHOP", "BRUTALISM"],
-      position: "left"
+      position: "left",
+      result: "+240% engagement"
     },
     {
       number: "02", 
       title: "DÉVELOPPEMENT AVANT-GARDE",
       description: "Code propre, architecture modulaire, performances ultimes. Chaque ligne de code est pensée pour l'excellence technique.",
       tech: ["REACT", "NEXT.JS", "TYPESCRIPT", "THREE.JS"],
-      position: "center"
+      position: "center",
+      result: "Score 98/100 lighthouse"
     },
     {
       number: "03",
       title: "EXPÉRIENCE SENSORIELLE",
       description: "Interactions surprenantes, animations cinématographiques, parcours utilisateur révolutionnaire.",
       tech: ["FRAMER", "GSAP", "WEBGL", "CSS3"],
-      position: "right"
+      position: "right",
+      result: "+180% conversions"
     },
     {
       number: "04",
       title: "STRATÉGIE DISRUPTIVE",
       description: "Nous ne suivons pas les tendances, nous les créons. Chaque projet redéfinit les standards de son secteur.",
       tech: ["BRANDING", "UX/UI", "STRATEGY", "INNOVATION"],
-      position: "left"
+      position: "left",
+      result: "Clients conquis à 100%"
     },
     {
       number: "05",
       title: "PERFORMANCE EXTRÊME",
       description: "Vitesse de chargement record, SEO technique poussé, optimisation obsessionnelle pour l'excellence.",
       tech: ["LIGHTHOUSE", "CORE VITALS", "SEO", "PWA"],
-      position: "center"
+      position: "center",
+      result: "-60% temps chargement"
     },
     {
       number: "06",
       title: "SUPPORT TECHNIQUE",
       description: "Maintenance proactive, mises à jour continues, support technique d'élite pour votre tranquillité d'esprit.",
       tech: ["24/7", "MONITORING", "BACKUP", "SECURITY"],
-      position: "right"
+      position: "right",
+      result: "99.9% uptime garanti"
     }
   ];
 
@@ -621,7 +623,17 @@ const Services: React.FC = () => {
   };
 
   const handleCardInteraction = (index: number) => {
-    triggerScan(index);
+    const scanEffect: ScanEffect = {
+      id: Date.now(),
+      cardIndex: index
+    };
+    
+    setActiveScan(scanEffect);
+    
+    // Nettoyer après l'animation (2 secondes)
+    setTimeout(() => {
+      setActiveScan(null);
+    }, 2000);
   };
 
   return (
@@ -645,7 +657,6 @@ const Services: React.FC = () => {
               animate={isInView ? "visible" : "hidden"}
               variants={cardVariants}
               whileHover={{ scale: 1.02 }}
-              data-cursor="hover"
               onMouseEnter={() => handleCardInteraction(index)}
               onClick={() => handleCardInteraction(index)}
             >
@@ -665,6 +676,11 @@ const Services: React.FC = () => {
                   </TechTag>
                 ))}
               </ServiceTech>
+              
+              <ServiceResult>
+                <span className="metric">{service.result}</span>
+                Résultat moyen client
+              </ServiceResult>
               
               {/* Effets de scan cinématique */}
               <ScanContainer>
@@ -732,38 +748,28 @@ const Services: React.FC = () => {
               </ScanContainer>
             </ServiceCard>
           ))}
-
-          <ManifestoCard
-            ref={manifestoRef}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.8, duration: 1 }}
-          >
-            <div style={{ overflow: 'hidden', position: 'relative' }}>
-              <AnimatedText 
-                text="NOUS NE CRÉONS PAS DES SITES WEB." 
-                isVisible={isManifestoInView}
-                lineDelay={0}
-                isBold={true}
-              />
-              <br />
-              <AnimatedText 
-                text="NOUS FORGEONS DES EXPÉRIENCES NUMÉRIQUES" 
-                isVisible={isManifestoInView}
-                lineDelay={1.5}
-                isBold={false}
-              />
-              <br />
-              <AnimatedText 
-                text="QUI MARQUENT LES ESPRITS." 
-                isVisible={isManifestoInView}
-                lineDelay={3}
-                isBold={false}
-              />
-            </div>
-          </ManifestoCard>
         </ServicesGrid>
       </ServicesSection>
+
+      {/* === SECTION TÉMOIGNAGE === */}
+      <TestimonialSection>
+        <TestimonialCard
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <TestimonialText>
+            "FRANCHEMENT, JE NE PENSAIS PAS QU'UN SITE WEB POUVAIT AVOIR 
+            AUTANT D'IMPACT SUR MON ENTREPRISE. MES VENTES ONT TRIPLÉ EN 6 MOIS."
+          </TestimonialText>
+          <TestimonialAuthor>
+            <span className="name">SARAH DUBOIS</span>
+            CEO — LUXE RETAIL GROUP
+            <div className="result">Résultat dépassé toutes nos attentes</div>
+          </TestimonialAuthor>
+        </TestimonialCard>
+      </TestimonialSection>
 
       {/* === SECTION CLIENTS === */}
       <ClientsSection id="clients" ref={clientsRef}>
@@ -810,8 +816,419 @@ const Services: React.FC = () => {
           </LogoCarouselTrack>
         </LogoCarouselSection>
       </ClientsSection>
+
+      {/* === SECTION TARIFS === */}
+      <PricingSection>
+        <PricingTitle
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+        >
+          TARIFICATION
+        </PricingTitle>
+
+        <PricingGrid>
+          {/* Option Budget/Rapide */}
+          <PricingCard
+            $featured={false}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02 }}
+          >
+            <PricingHeader>
+              <PricingName>🟡 IMPACT</PricingName>
+              <PricingSubtitle>Pour les entreprises qui se lancent avec un petit budget.</PricingSubtitle>
+            </PricingHeader>
+
+            <PricingPrice>
+              <PricingAmount>Sur mesure</PricingAmount>
+              <PricingPeriod>Selon votre budget</PricingPeriod>
+            </PricingPrice>
+
+            <PricingFeatures>
+              <PricingFeature>• Direction artistique sur mesure</PricingFeature>
+              <PricingFeature>• Maquette UX/UI minimaliste et percutante</PricingFeature>
+              <PricingFeature>• Design responsive adapté à mobile</PricingFeature>
+              <PricingFeature>• Intégration technique optimisée (Next.js / React / Vite)</PricingFeature>
+              <PricingFeature>• Animations légères et ciblées (entrées, survols)</PricingFeature>
+              <PricingFeature>• Identité visuelle cohérente (typographie + composition)</PricingFeature>
+              <PricingFeature>• Optimisation SEO de base</PricingFeature>
+              <PricingFeature>• Mise en ligne + accompagnement</PricingFeature>
+              <PricingFeature>• Option de version évolutive si besoin</PricingFeature>
+            </PricingFeatures>
+
+            <PricingCTA
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              OBTENIR UN DEVIS
+            </PricingCTA>
+
+            <PricingNote>
+              Livraison 1-2 semaines
+            </PricingNote>
+          </PricingCard>
+
+          {/* Option Premium/Poussée */}
+          <PricingCard
+            $featured={true}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02 }}
+          >
+            <PricingBadge>RECOMMANDÉ</PricingBadge>
+            
+            <PricingHeader>
+              <PricingName>⚫ EXCELLENCE</PricingName>
+              <PricingSubtitle>Pour les entreprises déjà confirmées qui veulent marquer les esprits.</PricingSubtitle>
+            </PricingHeader>
+
+            <PricingPrice>
+              <PricingAmount>À partir de 4000€</PricingAmount>
+              <PricingPeriod>Investissement unique</PricingPeriod>
+            </PricingPrice>
+
+            <PricingFeatures>
+              <PricingFeature>• Direction artistique complète + recherche créative approfondie</PricingFeature>
+              <PricingFeature>• Maquettes multi-écrans / multi-scènes cinématographiques</PricingFeature>
+              <PricingFeature>• Expériences interactives avancées (WebGL, Three.js, transitions dynamiques)</PricingFeature>
+              <PricingFeature>• Animation narrative (intro "théâtrale", effets glitch, storytelling immersif)</PricingFeature>
+              <PricingFeature>• Déclinaison sur desktop / mobile / tablette avec breakpoints maîtrisés</PricingFeature>
+              <PricingFeature>• Design system poussé + composants personnalisés</PricingFeature>
+              <PricingFeature>• SEO avancé, vitesse + accessibilité optimisée</PricingFeature>
+              <PricingFeature>• Formation post-livraison + support créatif</PricingFeature>
+              <PricingFeature>• Possibilité de synchronisation avec branding global + print</PricingFeature>
+              <PricingFeature>• Création d'assets sur demande (vidéo intro, micro-content, effet sonore, etc.)</PricingFeature>
+            </PricingFeatures>
+
+            <PricingCTA
+              $featured={true}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              DÉMARRER MAINTENANT
+            </PricingCTA>
+
+            <PricingNote>
+              Livraison 6-8 semaines
+            </PricingNote>
+          </PricingCard>
+        </PricingGrid>
+
+        <PricingFooter
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <PricingFooterText>
+            Chaque projet est unique. Ces tarifs sont indicatifs.
+            <br />
+            <strong>Devis personnalisé gratuit sous 24h.</strong>
+          </PricingFooterText>
+        </PricingFooter>
+      </PricingSection>
     </>
   );
 };
+
+// === STYLED COMPONENTS POUR LA SECTION TARIFS ===
+
+const PricingSection = styled.section`
+  background: #000000;
+  padding: 12rem 5vw;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 8rem 4vw;
+  }
+`;
+
+const PricingTitle = styled(motion.h2)`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 100;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 8rem;
+  
+  &::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 2px;
+    background: #ffffff;
+    margin: 3rem auto 0;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 6rem;
+    
+    &::after {
+      width: 80px;
+      margin-top: 2rem;
+    }
+  }
+`;
+
+const PricingGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    gap: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+`;
+
+const PricingCard = styled(motion.div)<{ $featured: boolean }>`
+  position: relative;
+  border: 2px solid ${props => props.$featured ? '#ffffff' : 'rgba(255, 255, 255, 0.3)'};
+  background: ${props => props.$featured ? 'rgba(255, 255, 255, 0.05)' : 'transparent'};
+  padding: 3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-left: 3px solid #ffffff;
+    border-top: 3px solid #ffffff;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border-right: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2.5rem 2rem;
+  }
+`;
+
+const PricingBadge = styled.div`
+  position: absolute;
+  top: -1px;
+  right: 2rem;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 0.5rem 1rem;
+  transform: translateY(-50%);
+
+  @media (max-width: 768px) {
+    right: 1rem;
+    font-size: 0.6rem;
+    padding: 0.4rem 0.8rem;
+  }
+`;
+
+const PricingHeader = styled.div`
+  margin-bottom: 3rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
+`;
+
+const PricingName = styled.h3`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const PricingSubtitle = styled.p`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const PricingPrice = styled.div`
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+  }
+`;
+
+const PricingAmount = styled.div`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+const PricingPeriod = styled.div`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+`;
+
+const PricingFeatures = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem 0;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
+`;
+
+const PricingFeature = styled.li`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  padding-left: 0;
+  line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+`;
+
+const PricingCTA = styled(motion.button)<{ $featured?: boolean }>`
+  width: 100%;
+  background: ${props => props.$featured ? '#ffffff' : 'transparent'};
+  border: 2px solid #ffffff;
+  color: ${props => props.$featured ? '#000000' : '#ffffff'};
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: ${props => props.$featured ? '#000000' : '#ffffff'};
+    transition: width 0.3s ease;
+    z-index: -1;
+  }
+  
+  &:hover {
+    color: ${props => props.$featured ? '#ffffff' : '#000000'};
+    
+    &::before {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: 0.8rem 1.5rem;
+  }
+`;
+
+const PricingNote = styled.p`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 0.65rem;
+  }
+`;
+
+const PricingFooter = styled(motion.div)`
+  text-align: center;
+  margin-top: 6rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  @media (max-width: 768px) {
+    margin-top: 4rem;
+    padding-top: 2rem;
+  }
+`;
+
+const PricingFooterText = styled.p`
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  
+  strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+`;
 
 export default Services; 

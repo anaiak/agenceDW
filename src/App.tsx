@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlobalStyles } from './styles/GlobalStyles.ts';
 import CinematicIntro from './components/CinematicIntro.tsx';
-import CustomCursor from './components/CustomCursor.tsx';
 import BackgroundAnimations from './components/BackgroundAnimations.tsx';
 import Header from './components/Header.tsx';
 import Hero from './components/Hero.tsx';
@@ -56,16 +55,24 @@ const HomePage: React.FC<{ showIntro: boolean; pushTransition: boolean }> = ({ s
         y: pushTransition ? "0vh" : "100vh"
       }}
       transition={{ 
-        duration: 1.5,
-        ease: [0.25, 0.1, 0.25, 1]
+        duration: 2.0,
+        ease: [0.19, 1, 0.22, 1] // Easing plus fluide (easeOutExpo)
+      }}
+      onAnimationComplete={() => {
+        // Quand l'animation se termine, s'assurer qu'on est en haut
+        if (pushTransition) {
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 100);
+        }
       }}
     >
       <Header />
       <main>
         <Hero />
-        <Services />
-        <Process />
         <SiteTypes />
+        <Process />
+        <Services />
         <WebDesignTrends />
         <Portfolio />
         <About />
@@ -82,8 +89,8 @@ const HomePage: React.FC<{ showIntro: boolean; pushTransition: boolean }> = ({ s
           y: pushTransition ? "-100vh" : "0vh"
         }}
         transition={{ 
-          duration: 1.5,
-          ease: [0.25, 0.1, 0.25, 1]
+          duration: 2.0,
+          ease: [0.19, 1, 0.22, 1] // Easing plus fluide (easeOutExpo)
         }}
       >
         <CinematicIntro />
@@ -102,13 +109,17 @@ const App: React.FC = () => {
       // Délai pour que la transition push se termine avant de masquer l'intro
       setTimeout(() => {
         setShowIntro(false);
-        // Permettre le scroll après la transition
+        // Permettre le scroll après la transition et forcer le scroll en haut
         document.body.style.overflow = 'auto';
-      }, 1500);
-    }, 2000); // Intro de 2 secondes
+        window.scrollTo(0, 0); // Forcer le scroll en haut de la page
+      }, 2000); // Ajusté pour correspondre à la nouvelle durée de transition
+    }, 3500); // Intro de 3.5 secondes exactement
 
     // Bloquer le scroll pendant l'intro
     document.body.style.overflow = 'hidden';
+    
+    // S'assurer qu'on est en haut de la page au début
+    window.scrollTo(0, 0);
 
     return () => {
       clearTimeout(timer);
@@ -119,7 +130,6 @@ const App: React.FC = () => {
   return (
     <Router>
       <GlobalStyles />
-      <CustomCursor />
       <BackgroundAnimations />
       
       <Routes>

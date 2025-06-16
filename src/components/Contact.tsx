@@ -423,7 +423,7 @@ const Contact: React.FC = () => {
           minute: '2-digit',
           second: '2-digit'
         }),
-        to_email: 'contact@dreamweaver.studio', // Email de destination
+        to_email: 'ferrerrehugo974@gmail.com', // Email de destination
       };
 
       console.log('Envoi des données:', templateParams);
@@ -461,24 +461,7 @@ const Contact: React.FC = () => {
   };
 
   const contactInfo = [
-    {
-      title: "EMAIL",
-      text: "Écrivez-nous directement",
-      link: "contact@dreamweaver.studio",
-      href: "mailto:contact@dreamweaver.studio"
-    },
-    {
-      title: "PHONE",
-      text: "Parlons de votre projet",
-      link: "+33 1 23 45 67 89",
-      href: "tel:+33123456789"
-    },
-    {
-      title: "ADRESSE",
-      text: "Venez nous rencontrer",
-      link: "Paris, France",
-      href: "#"
-    }
+    // Informations de contact supprimées sur demande
   ];
 
   const socialLinks = [

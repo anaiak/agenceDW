@@ -13,28 +13,10 @@ export const GlobalStyles = createGlobalStyle`
     min-height: 100vh;
     overflow-x: hidden;
     color: #ffffff;
-    cursor: none;
   }
 
   html {
     scroll-behavior: smooth;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background: #ffffff;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    mix-blend-mode: difference;
-    transition: transform 0.1s ease;
-  }
-
-  .cursor.hover {
-    transform: scale(2);
   }
 
   ::-webkit-scrollbar {
@@ -133,7 +115,7 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    cursor: none;
+    cursor: pointer;
     transition: all 0.3s ease;
     
     &:hover {

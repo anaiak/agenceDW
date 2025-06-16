@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 const SiteTypesSection = styled.section`
   min-height: 100vh;
@@ -199,13 +199,14 @@ const TechTag = styled(motion.span)`
   border-radius: 0;
   
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
     color: #ffffff;
   }
 
   @media (max-width: 768px) {
-    padding: 0.25rem 0.6rem;
     font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
   }
 `;
 
@@ -453,8 +454,115 @@ const ExperimentalIcon = () => (
   </svg>
 );
 
+// Styles pour le manifeste
+const ManifestoCard = styled(motion.div)`
+  border: 2px solid #ffffff;
+  padding: 4rem;
+  text-align: center;
+  margin-top: 6rem;
+  width: 100%;
+  max-width: 1400px;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+    margin-top: 4rem;
+  }
+`;
+
+// Composant pour animer chaque lettre individuellement
+const AnimatedLetter = styled(motion.span)<{ $delay: number }>`
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`;
+
+const AnimatedLine = styled(motion.div)`
+  margin-bottom: 0.5rem;
+`;
+
+// Composant pour animer le texte lettre par lettre
+const AnimatedText: React.FC<{ 
+  text: string; 
+  isVisible: boolean; 
+  lineDelay?: number;
+  isBold?: boolean;
+}> = ({ text, isVisible, lineDelay = 0, isBold = false }) => {
+  const [animatedLetters, setAnimatedLetters] = useState<Array<{
+    char: string;
+    id: number;
+    initialX: number;
+    initialY: number;
+    initialRotate: number;
+    delay: number;
+  }>>([]);
+
+  useEffect(() => {
+    const letters = text.split('').map((char, index) => ({
+      char,
+      id: Math.random(),
+      // Directions aléatoires très variées
+      initialX: (Math.random() - 0.5) * 2000, // -1000px à 1000px
+      initialY: (Math.random() - 0.5) * 1500, // -750px à 750px
+      initialRotate: (Math.random() - 0.5) * 720, // -360° à 360°
+      delay: index * 0.03 + lineDelay // Délai progressif
+    }));
+    setAnimatedLetters(letters);
+  }, [text, lineDelay]);
+
+  return (
+    <AnimatedLine>
+      {animatedLetters.map((letter, index) => (
+        <AnimatedLetter
+          key={letter.id}
+          $delay={letter.delay}
+          initial={{
+            x: letter.initialX,
+            y: letter.initialY,
+            rotate: letter.initialRotate,
+            opacity: 0,
+            scale: Math.random() * 0.5 + 0.5 // Scale aléatoire
+          }}
+          animate={isVisible ? {
+            x: 0,
+            y: 0,
+            rotate: 0,
+            opacity: 1,
+            scale: 1
+          } : {
+            x: letter.initialX,
+            y: letter.initialY,
+            rotate: letter.initialRotate,
+            opacity: 0,
+            scale: Math.random() * 0.5 + 0.5
+          }}
+          transition={{
+            duration: 0.8 + Math.random() * 0.4, // Durée variable
+            delay: letter.delay,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            damping: 20,
+            stiffness: 100
+          }}
+          style={{
+            fontWeight: isBold ? 700 : 300,
+            marginRight: letter.char === ' ' ? '0.3em' : '0'
+          }}
+        >
+          {letter.char === ' ' ? '\u00A0' : letter.char}
+        </AnimatedLetter>
+      ))}
+    </AnimatedLine>
+  );
+};
+
 const SiteTypes: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const manifestoRef = useRef(null);
+  const isManifestoInView = useInView(manifestoRef, { once: true, margin: "-200px" });
 
   const siteTypes = [
     {
@@ -615,6 +723,38 @@ const SiteTypes: React.FC = () => {
           </TypeCard>
         ))}
       </TypesGrid>
+
+      {/* Manifeste ajouté */}
+      <ManifestoCard
+        ref={manifestoRef}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.8, duration: 1 }}
+        viewport={{ once: true }}
+      >
+        <div style={{ overflow: 'hidden', position: 'relative' }}>
+          <AnimatedText 
+            text="NOUS NE CRÉONS PAS DES SITES WEB." 
+            isVisible={isManifestoInView}
+            lineDelay={0}
+            isBold={true}
+          />
+          <br />
+          <AnimatedText 
+            text="NOUS FORGEONS DES EXPÉRIENCES NUMÉRIQUES" 
+            isVisible={isManifestoInView}
+            lineDelay={1.5}
+            isBold={false}
+          />
+          <br />
+          <AnimatedText 
+            text="QUI MARQUENT LES ESPRITS." 
+            isVisible={isManifestoInView}
+            lineDelay={3}
+            isBold={false}
+          />
+        </div>
+      </ManifestoCard>
     </SiteTypesSection>
   );
 };

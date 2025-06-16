@@ -171,7 +171,7 @@ const CinematicIntro: React.FC = () => {
         if (orderIndex === randomOrder.length - 1) {
           setTimeout(() => {
             setIsComplete(true);
-          }, 1000);
+          }, 800); // Temps d'attente après la dernière lettre : 800ms
         }
       }, orderIndex * 200 + 500); // 200ms entre chaque lettre + 500ms de délai initial
     });
@@ -199,9 +199,14 @@ const CinematicIntro: React.FC = () => {
       <IntroContainer
         initial={{ opacity: 1 }}
         exit={{ 
-          opacity: 0
+          opacity: 0,
+          scale: 0.95,
+          filter: "blur(8px)"
         }}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        transition={{ 
+          duration: 2.0, 
+          ease: [0.19, 1, 0.22, 1] // Même easing que la transition push
+        }}
       >
         {/* Film grain */}
         <FilmGrain
@@ -344,9 +349,9 @@ const CinematicIntro: React.FC = () => {
             opacity: isComplete ? 1 : 0
           }}
           transition={{ 
-            delay: 0.5,
-            duration: 1.5,
-            ease: "easeInOut"
+            delay: 0.3,
+            duration: 1.2,
+            ease: [0.19, 1, 0.22, 1] // Transition fluide vers le fade final
           }}
         />
       </IntroContainer>
