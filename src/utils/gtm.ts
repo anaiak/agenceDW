@@ -1,7 +1,8 @@
 // Google Tag Manager utility functions
 
-// Configuration GTM
+// Configuration GTM et Google Analytics
 const GTM_ID = 'GTM-KV8Q2ZXG';
+const GA_ID = 'G-52NCFQBPEH';
 
 declare global {
   interface Window {
@@ -28,23 +29,52 @@ export const gtmPushEvent = (eventName: string, parameters?: Record<string, any>
   }
 };
 
+// Google Analytics gtag function wrapper
+export const gtagEvent = (action: string, category: string, parameters?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      ...parameters,
+    });
+  }
+};
+
+// Send page view to Google Analytics
+export const gtagPageView = (pageTitle: string, pageLocation?: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('config', GA_ID, {
+      page_title: pageTitle,
+      page_location: pageLocation || window.location.href,
+    });
+  }
+};
+
 // Specific event functions for common actions
 export const gtmEvents = {
   // Page view tracking
   pageView: (pageName: string, pageUrl?: string) => {
+    const url = pageUrl || window.location.href;
+    // Envoyer vers GTM
     gtmPushEvent('page_view', {
       page_title: pageName,
-      page_location: pageUrl || window.location.href,
+      page_location: url,
     });
+    // Envoyer vers Google Analytics
+    gtagPageView(pageName, url);
   },
 
   // Contact form events
   contactFormStart: () => {
     gtmPushEvent('contact_form_start');
+    gtagEvent('form_start', 'engagement', { form_name: 'contact' });
   },
 
   contactFormSubmit: (formData?: Record<string, any>) => {
     gtmPushEvent('contact_form_submit', {
+      ...formData,
+    });
+    gtagEvent('form_submit', 'conversion', {
+      form_name: 'contact',
       ...formData,
     });
   },
@@ -54,6 +84,10 @@ export const gtmEvents = {
     gtmPushEvent('project_view', {
       project_name: projectName,
     });
+    gtagEvent('view_item', 'engagement', {
+      item_name: projectName,
+      content_type: 'project',
+    });
   },
 
   // Service interactions
@@ -61,17 +95,28 @@ export const gtmEvents = {
     gtmPushEvent('service_view', {
       service_name: serviceName,
     });
+    gtagEvent('view_item', 'engagement', {
+      item_name: serviceName,
+      content_type: 'service',
+    });
   },
 
   // Download/CTA events
   downloadPortfolio: () => {
     gtmPushEvent('download_portfolio');
+    gtagEvent('file_download', 'engagement', {
+      file_name: 'portfolio',
+    });
   },
 
   ctaClick: (ctaName: string, location: string) => {
     gtmPushEvent('cta_click', {
       cta_name: ctaName,
       cta_location: location,
+    });
+    gtagEvent('click', 'engagement', {
+      click_text: ctaName,
+      click_location: location,
     });
   },
 
@@ -80,6 +125,10 @@ export const gtmEvents = {
     gtmPushEvent('menu_click', {
       menu_item: menuItem,
     });
+    gtagEvent('click', 'navigation', {
+      click_text: menuItem,
+      content_type: 'menu',
+    });
   },
 
   // Scroll depth tracking
@@ -87,11 +136,17 @@ export const gtmEvents = {
     gtmPushEvent('scroll_depth', {
       scroll_percentage: percentage,
     });
+    gtagEvent('scroll', 'engagement', {
+      scroll_depth: percentage,
+    });
   },
 
   // Legal pages
   legalPageView: (pageType: 'legal-notice' | 'privacy-policy' | 'terms-of-service') => {
     gtmPushEvent('legal_page_view', {
+      page_type: pageType,
+    });
+    gtagEvent('page_view', 'legal', {
       page_type: pageType,
     });
   },
