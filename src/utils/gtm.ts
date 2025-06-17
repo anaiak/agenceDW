@@ -11,19 +11,11 @@ declare global {
   }
 }
 
-// Initialize GTM dataLayer if it doesn't exist
+// Initialize GTM dataLayer if it doesn't exist (minimal version)
 export const initGTM = () => {
+  // GTM s'initialise automatiquement via le script dans index.html
+  // On s'assure juste que dataLayer existe
   window.dataLayer = window.dataLayer || [];
-  
-  // Push GTM config
-  window.dataLayer.push({
-    'gtm.start': new Date().getTime(),
-    event: 'gtm.js'
-  });
-  
-  // Debug log pour vérifier l'initialisation
-  console.log('GTM initialized with ID:', GTM_ID);
-  console.log('dataLayer:', window.dataLayer);
 };
 
 // Push events to GTM dataLayer
