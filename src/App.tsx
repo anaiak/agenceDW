@@ -20,6 +20,7 @@ import ContactFloatingButton from './components/ContactFloatingButton.tsx';
 import LegalNotice from './components/LegalNotice.tsx';
 import PrivacyPolicy from './components/PrivacyPolicy.tsx';
 import TermsOfService from './components/TermsOfService.tsx';
+import GTMDiagnostic from './components/GTMDiagnostic.tsx';
 import { initGTM, gtmEvents } from './utils/gtm.ts';
 
 // Container pour la transition push
@@ -108,11 +109,35 @@ const AppContent: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [pushTransition, setPushTransition] = useState(false);
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize GTM on app start
+  // Initialize GTM
   useEffect(() => {
     initGTM();
   }, []);
+
+  // Handle intro timing
+  useEffect(() => {
+    if (location.pathname === '/') {
+      // L'intro disparaît seulement APRÈS la transition push complète
+      const timer = setTimeout(() => {
+        setShowIntro(false);
+      }, 5500); // 3.5s (début push) + 2s (durée push) = 5.5s total
+
+      const loadingTimer = setTimeout(() => {
+        setIsLoading(false);
+      }, 6000); // Un peu après la fin de l'intro
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(loadingTimer);
+      };
+    } else {
+      // For non-home pages, skip intro immediately
+      setShowIntro(false);
+      setIsLoading(false);
+    }
+  }, [location.pathname]);
 
   // Track page changes
   useEffect(() => {
@@ -201,6 +226,7 @@ const AppContent: React.FC = () => {
         />
       </Routes>
       <ContactFloatingButton />
+      <GTMDiagnostic />
     </>
   );
 };
