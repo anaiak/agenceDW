@@ -14,9 +14,16 @@ COPY package*.json ./
 # Installer TOUTES les dépendances (dev + prod nécessaires pour le build)
 RUN npm ci --silent
 
-# Copier les dossiers source explicitement
-COPY src/ ./src/
-COPY public/ ./public/
+# Copier tout le contenu
+COPY . .
+
+# Debug : vérifier ce qui a été copié
+RUN echo "=== DEBUG: Contenu copié ===" && \
+    ls -la && \
+    echo "=== public/ existe ? ===" && \
+    ls -la public/ || echo "ERREUR: public/ n'existe pas" && \
+    echo "=== src/ existe ? ===" && \
+    ls -la src/ || echo "ERREUR: src/ n'existe pas"
 
 # Variables d'environnement pour le build
 ENV NODE_ENV=production
