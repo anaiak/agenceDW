@@ -17,14 +17,6 @@ RUN npm ci --silent
 # Copier tout le contenu
 COPY . .
 
-# Debug : vérifier ce qui a été copié
-RUN echo "=== DEBUG: Contenu copié ===" && \
-    ls -la && \
-    echo "=== public/ existe ? ===" && \
-    ls -la public/ || echo "ERREUR: public/ n'existe pas" && \
-    echo "=== src/ existe ? ===" && \
-    ls -la src/ || echo "ERREUR: src/ n'existe pas"
-
 # Variables d'environnement pour le build
 ENV NODE_ENV=production
 ENV GENERATE_SOURCEMAP=false

@@ -1,32 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+    <!-- Test Script AVANT GTM -->
+    <script>console.log('SCRIPT TEST: Page loading...');</script>
+    
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script>(function(w,d,s,l,i){
+    console.log('GTM: Starting GTM script...');
+    w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;var n=d.querySelector('[nonce]');
     n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));f.parentNode.insertBefore(j,f);
+    console.log('GTM: Script injection complete for ID:', i);
     })(window,document,'script','dataLayer','GTM-KV8Q2ZXG');</script>
     <!-- End Google Tag Manager -->
     
     <!-- GTM Debug Script -->
     <script>
+    console.log('GTM DEBUG: Script loaded');
     setTimeout(function() {
-      console.log('=== GTM DEBUG ===');
+      console.log('=== GTM DEBUG AFTER 3s ===');
       console.log('dataLayer exists:', typeof window.dataLayer !== 'undefined');
       console.log('dataLayer content:', window.dataLayer);
-      console.log('GTM script loaded:', !!document.querySelector('script[src*="googletagmanager.com"]'));
-      console.log('Network requests to GTM:', 'Check Network tab for googletagmanager.com');
+      console.log('GTM script in DOM:', !!document.querySelector('script[src*="googletagmanager.com"]'));
       
-      // Test si GTM fonctionne
+      const gtmScript = document.querySelector('script[src*="googletagmanager.com"]');
+      if (gtmScript) {
+        console.log('GTM script found:', gtmScript.src);
+        console.log('GTM script loaded:', gtmScript.readyState || 'unknown');
+      } else {
+        console.log('GTM script NOT FOUND in DOM');
+      }
+      
       if (window.dataLayer) {
         window.dataLayer.push({'event': 'gtm_test', 'test': 'working'});
         console.log('GTM test event pushed');
+      } else {
+        console.log('ERROR: dataLayer not found!');
       }
     }, 3000);
     </script>
     <!-- End GTM Debug Script -->
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '594641686564626');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=594641686564626&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -48,5 +81,10 @@
     
     <noscript>Vous devez activer JavaScript pour exécuter cette application.</noscript>
     <div id="root"></div>
+    
+    <!-- Test final -->
+    <script>
+    console.log('FINAL TEST: Page fully loaded');
+    </script>
   </body>
 </html> 
