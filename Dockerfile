@@ -25,13 +25,6 @@ RUN echo "=== Vérification des dossiers ===" && \
     echo "=== Contenu src ===" && \
     (ls -la src/ || echo "Dossier src manquant")
 
-# Créer index.html minimal si manquant
-RUN if [ ! -f "public/index.html" ]; then \
-        echo "Création du dossier public et index.html manquants" && \
-        mkdir -p public && \
-        echo '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"/><link rel="icon" href="%PUBLIC_URL%/favicon.ico"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="DreamWeaver Studio"/><title>DREAMWEAVER — SHOCK OF THE NEW</title><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"></head><body><noscript>JavaScript requis pour l'"'"'expérience complète.</noscript><div id="root"></div></body></html>' > public/index.html; \
-    fi
-
 # Variables d'environnement pour le build
 ENV NODE_ENV=production
 ENV GENERATE_SOURCEMAP=false
