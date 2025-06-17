@@ -20,8 +20,6 @@ import ContactFloatingButton from './components/ContactFloatingButton.tsx';
 import LegalNotice from './components/LegalNotice.tsx';
 import PrivacyPolicy from './components/PrivacyPolicy.tsx';
 import TermsOfService from './components/TermsOfService.tsx';
-import GTMDiagnostic from './components/GTMDiagnostic.tsx';
-import { initGTM, gtmEvents } from './utils/gtm.ts';
 
 // Container pour la transition push
 const PushContainer = styled.div`
@@ -111,11 +109,6 @@ const AppContent: React.FC = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize GTM
-  useEffect(() => {
-    initGTM();
-  }, []);
-
   // Handle intro timing
   useEffect(() => {
     if (location.pathname === '/') {
@@ -139,35 +132,8 @@ const AppContent: React.FC = () => {
     }
   }, [location.pathname]);
 
-  // Track page changes
+  // Handle intro push transition
   useEffect(() => {
-    // Track page views for GTM
-    const getPageName = (pathname: string) => {
-      switch (pathname) {
-        case '/': return 'Accueil';
-        case '/legal-notice': return 'Mentions Légales';
-        case '/privacy-policy': return 'Politique de Confidentialité';
-        case '/terms-of-service': return 'Conditions Générales de Vente';
-        default:
-          if (pathname.startsWith('/project/')) {
-            return 'Détail Projet';
-          }
-          return 'Page Inconnue';
-      }
-    };
-
-    // Send page view to GTM
-    gtmEvents.pageView(getPageName(location.pathname));
-
-    // Track legal pages specifically
-    if (location.pathname === '/legal-notice') {
-      gtmEvents.legalPageView('legal-notice');
-    } else if (location.pathname === '/privacy-policy') {
-      gtmEvents.legalPageView('privacy-policy');
-    } else if (location.pathname === '/terms-of-service') {
-      gtmEvents.legalPageView('terms-of-service');
-    }
-
     // Ne déclencher l'intro que sur la page d'accueil
     if (location.pathname === '/') {
       const timer = setTimeout(() => {
@@ -226,7 +192,6 @@ const AppContent: React.FC = () => {
         />
       </Routes>
       <ContactFloatingButton />
-      <GTMDiagnostic />
     </>
   );
 };
