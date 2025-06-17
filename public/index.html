@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;var n=d.querySelector('[nonce]');
+    n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KV8Q2ZXG');</script>
+    <!-- End Google Tag Manager -->
+    
+    <!-- GTM Debug Script -->
+    <script>
+    setTimeout(function() {
+      console.log('=== GTM DEBUG ===');
+      console.log('dataLayer exists:', typeof window.dataLayer !== 'undefined');
+      console.log('dataLayer content:', window.dataLayer);
+      console.log('GTM script loaded:', !!document.querySelector('script[src*="googletagmanager.com"]'));
+      console.log('Network requests to GTM:', 'Check Network tab for googletagmanager.com');
+      
+      // Test si GTM fonctionne
+      if (window.dataLayer) {
+        window.dataLayer.push({'event': 'gtm_test', 'test': 'working'});
+        console.log('GTM test event pushed');
+      }
+    }, 3000);
+    </script>
+    <!-- End GTM Debug Script -->
+    
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="DreamWeaver Studio - Service de création de sites web innovant et fantaisiste"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>DreamWeaver Studio</title>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KV8Q2ZXG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <noscript>Vous devez activer JavaScript pour exécuter cette application.</noscript>
+    <div id="root"></div>
+  </body>
+</html> 
