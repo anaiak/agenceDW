@@ -14,28 +14,15 @@ COPY package*.json ./
 # Installer TOUTES les dépendances (dev + prod nécessaires pour le build)
 RUN npm ci --silent
 
-# Copier tout le contenu (plus robuste)
-COPY . .
-
-# Vérifier et créer les dossiers/fichiers manquants si nécessaire
-RUN echo "=== Vérification des dossiers ===" && \
-    ls -la && \
-    echo "=== Contenu public ===" && \
-    (ls -la public/ || echo "Dossier public manquant") && \
-    echo "=== Contenu src ===" && \
-    (ls -la src/ || echo "Dossier src manquant")
+# Copier les dossiers source explicitement
+COPY src/ ./src/
+COPY public/ ./public/
 
 # Variables d'environnement pour le build
 ENV NODE_ENV=production
 ENV GENERATE_SOURCEMAP=false
 ENV CI=true
 ENV DISABLE_ESLINT_PLUGIN=true
-
-# Vérification finale avant build
-RUN echo "=== État final avant build ===" && \
-    ls -la public/ && \
-    echo "=== Contenu index.html ===" && \
-    cat public/index.html
 
 # Build de l'application avec gestion d'erreur
 RUN npm run build
