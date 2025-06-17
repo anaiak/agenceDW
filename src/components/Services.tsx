@@ -915,7 +915,11 @@ const PricingSection = styled.section`
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 8rem 4vw;
+    padding: 6rem 3vw;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 4rem 2vw;
   }
 `;
 
@@ -939,12 +943,22 @@ const PricingTitle = styled(motion.h2)`
   }
 
   @media (max-width: 768px) {
-    margin-bottom: 6rem;
-    font-size: clamp(3.5rem, 10vw, 7rem);
+    margin-bottom: 4rem;
+    font-size: clamp(2.5rem, 8vw, 5rem);
     
     &::after {
       width: 80px;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 3rem;
+    font-size: clamp(2rem, 7vw, 4rem);
+    
+    &::after {
+      width: 60px;
+      margin-top: 1rem;
     }
   }
 `;
@@ -962,7 +976,13 @@ const PricingGrid = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
+    max-width: 500px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1.5rem;
+    max-width: 100%;
   }
 `;
 
@@ -973,6 +993,7 @@ const PricingCard = styled(motion.div)<{ $featured: boolean }>`
   padding: 3rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-height: fit-content;
   
   &::before {
     content: '';
@@ -997,7 +1018,17 @@ const PricingCard = styled(motion.div)<{ $featured: boolean }>`
   }
 
   @media (max-width: 768px) {
-    padding: 2.5rem 2rem;
+    padding: 2rem 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem;
+    
+    &::before, &::after {
+      width: 20px;
+      height: 20px;
+      border-width: 2px;
+    }
   }
 `;
 
@@ -1020,6 +1051,13 @@ const PricingBadge = styled.div`
     font-size: 0.6rem;
     padding: 0.4rem 0.8rem;
   }
+  
+  @media (max-width: 480px) {
+    right: 0.5rem;
+    font-size: 0.55rem;
+    padding: 0.3rem 0.6rem;
+    letter-spacing: 0.1em;
+  }
 `;
 
 const PricingHeader = styled.div`
@@ -1028,6 +1066,10 @@ const PricingHeader = styled.div`
 
   @media (max-width: 768px) {
     margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -1041,7 +1083,13 @@ const PricingName = styled.h3`
   margin-bottom: 1rem;
 
   @media (max-width: 768px) {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
   }
 `;
 
@@ -1051,9 +1099,16 @@ const PricingSubtitle = styled.p`
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  line-height: 1.4;
 
   @media (max-width: 768px) {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
   }
 `;
 
@@ -1067,6 +1122,11 @@ const PricingPrice = styled.div`
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
   }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
 `;
 
 const PricingAmount = styled.div`
@@ -1075,9 +1135,14 @@ const PricingAmount = styled.div`
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.5rem;
+  line-height: 1.1;
 
   @media (max-width: 768px) {
-    font-size: 2.2rem;
+    font-size: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
   }
 `;
 
@@ -1089,7 +1154,12 @@ const PricingPeriod = styled.div`
   letter-spacing: 0.1em;
 
   @media (max-width: 768px) {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
   }
 `;
 
@@ -1101,6 +1171,10 @@ const PricingFeatures = styled.ul`
   @media (max-width: 768px) {
     margin-bottom: 2rem;
   }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const PricingFeature = styled.li`
@@ -1110,10 +1184,19 @@ const PricingFeature = styled.li`
   margin-bottom: 1rem;
   padding-left: 0;
   line-height: 1.4;
+  word-wrap: break-word;
+  hyphens: auto;
 
   @media (max-width: 768px) {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
   }
 `;
 
@@ -1154,8 +1237,15 @@ const PricingCTA = styled(motion.button)<{ $featured?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     padding: 1rem 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -1169,7 +1259,12 @@ const PricingNote = styled.p`
   line-height: 1.4;
 
   @media (max-width: 768px) {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
   }
 `;
 
@@ -1182,6 +1277,11 @@ const PricingFooter = styled(motion.div)`
   @media (max-width: 768px) {
     margin-top: 4rem;
     padding-top: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
   }
 `;
 
@@ -1197,7 +1297,12 @@ const PricingFooterText = styled.p`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
   }
 `;
 

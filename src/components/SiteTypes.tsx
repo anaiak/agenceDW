@@ -469,8 +469,8 @@ const ManifestoCard = styled(motion.div)`
   }
 `;
 
-// Composant pour animer chaque lettre individuellement
-const AnimatedLetter = styled(motion.span)<{ $delay: number }>`
+// Composant pour animer chaque mot individuellement
+const AnimatedWord = styled(motion.span)<{ $delay: number }>`
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.2rem;
@@ -478,21 +478,50 @@ const AnimatedLetter = styled(motion.span)<{ $delay: number }>`
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+  }
+  
+  @media (max-width: 360px) {
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+  }
 `;
 
 const AnimatedLine = styled(motion.div)`
   margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+  
+  @media (max-width: 768px) {
+    gap: 0.25em;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.2em;
+  }
 `;
 
-// Composant pour animer le texte lettre par lettre
+// Composant pour animer le texte mot par mot au lieu de lettre par lettre
 const AnimatedText: React.FC<{ 
   text: string; 
   isVisible: boolean; 
   lineDelay?: number;
   isBold?: boolean;
 }> = ({ text, isVisible, lineDelay = 0, isBold = false }) => {
-  const [animatedLetters, setAnimatedLetters] = useState<Array<{
-    char: string;
+  const [animatedWords, setAnimatedWords] = useState<Array<{
+    word: string;
     id: number;
     initialX: number;
     initialY: number;
@@ -501,30 +530,30 @@ const AnimatedText: React.FC<{
   }>>([]);
 
   useEffect(() => {
-    const letters = text.split('').map((char, index) => ({
-      char,
+    const words = text.split(' ').map((word, index) => ({
+      word,
       id: Math.random(),
-      // Directions aléatoires très variées
-      initialX: (Math.random() - 0.5) * 2000, // -1000px à 1000px
-      initialY: (Math.random() - 0.5) * 1500, // -750px à 750px
-      initialRotate: (Math.random() - 0.5) * 720, // -360° à 360°
-      delay: index * 0.03 + lineDelay // Délai progressif
+      // Directions aléatoires moins extrêmes pour les mots
+      initialX: (Math.random() - 0.5) * 1000, // -500px à 500px
+      initialY: (Math.random() - 0.5) * 800, // -400px à 400px
+      initialRotate: (Math.random() - 0.5) * 360, // -180° à 180°
+      delay: index * 0.1 + lineDelay // Délai progressif entre les mots
     }));
-    setAnimatedLetters(letters);
+    setAnimatedWords(words);
   }, [text, lineDelay]);
 
   return (
     <AnimatedLine>
-      {animatedLetters.map((letter, index) => (
-        <AnimatedLetter
-          key={letter.id}
-          $delay={letter.delay}
+      {animatedWords.map((wordData, index) => (
+        <AnimatedWord
+          key={wordData.id}
+          $delay={wordData.delay}
           initial={{
-            x: letter.initialX,
-            y: letter.initialY,
-            rotate: letter.initialRotate,
+            x: wordData.initialX,
+            y: wordData.initialY,
+            rotate: wordData.initialRotate,
             opacity: 0,
-            scale: Math.random() * 0.5 + 0.5 // Scale aléatoire
+            scale: Math.random() * 0.3 + 0.7 // Scale aléatoire plus conservateur
           }}
           animate={isVisible ? {
             x: 0,
@@ -533,27 +562,26 @@ const AnimatedText: React.FC<{
             opacity: 1,
             scale: 1
           } : {
-            x: letter.initialX,
-            y: letter.initialY,
-            rotate: letter.initialRotate,
+            x: wordData.initialX,
+            y: wordData.initialY,
+            rotate: wordData.initialRotate,
             opacity: 0,
-            scale: Math.random() * 0.5 + 0.5
+            scale: Math.random() * 0.3 + 0.7
           }}
           transition={{
-            duration: 0.8 + Math.random() * 0.4, // Durée variable
-            delay: letter.delay,
+            duration: 0.6 + Math.random() * 0.3, // Durée variable plus rapide
+            delay: wordData.delay,
             ease: [0.25, 0.46, 0.45, 0.94],
             type: "spring",
-            damping: 20,
-            stiffness: 100
+            damping: 25,
+            stiffness: 120
           }}
           style={{
-            fontWeight: isBold ? 700 : 300,
-            marginRight: letter.char === ' ' ? '0.3em' : '0'
+            fontWeight: isBold ? 700 : 300
           }}
         >
-          {letter.char === ' ' ? '\u00A0' : letter.char}
-        </AnimatedLetter>
+          {wordData.word}
+        </AnimatedWord>
       ))}
     </AnimatedLine>
   );

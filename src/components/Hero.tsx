@@ -144,7 +144,7 @@ const MainMessage = styled(motion.h1)`
   }
 
   @media (max-width: 768px) {
-    font-size: clamp(1.2rem, 4.5vw, 2.2rem);
+    font-size: clamp(1.6rem, 5.5vw, 2.8rem);
     line-height: 1.3;
     letter-spacing: -0.01em;
     margin: 4vh auto 0;
@@ -152,7 +152,7 @@ const MainMessage = styled(motion.h1)`
   }
 
   @media (max-width: 480px) {
-    font-size: clamp(1rem, 4vw, 1.8rem);
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
     line-height: 1.35;
     letter-spacing: 0;
     max-width: 100%;
@@ -161,7 +161,7 @@ const MainMessage = styled(motion.h1)`
   }
 
   @media (max-width: 360px) {
-    font-size: clamp(0.9rem, 3.5vw, 1.5rem);
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
     line-height: 1.4;
     padding: 0 0.25rem;
     margin-top: 2vh;
